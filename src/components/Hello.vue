@@ -1,24 +1,15 @@
 <template>
   <div>
-      {{msg}}
+      {{ msg }}
       <form>
           <button>ADD TASK</button>
           <button>DELETE FINISHED TASKS</button>
           <p>input: <input type="text"></p>
-          <p>tasd: </p>
+          <p>task: </p>
       </form>
       <div class="task-list">
-          <label class="task-list__item">
-            <input type="checkbox"><button>EDIT</button>vue-router
-          </label>
-          <label class="task-list__item">
-            <input type="checkbox"><button>EDIT</button>vuex
-          </label>
-          <label class="task-list__item">
-            <input type="checkbox"><button>EDIT</button>vue-loader
-          </label>
-          <label class="task-list__item--checked">
-            <input type="checkbox" checked><button>EDIT</button>awesome-vue
+          <label class="task-list__item" v-for="todo in todos" :key="todo.id" >
+            <input type="checkbox"><button>EDIT</button>{{ todo.text }}
           </label>
       </div>
   </div>
@@ -30,6 +21,12 @@ export default {
   data() {
     return {
       msg: 'Welcome to your Vue.js App',
+      todos: [
+        { id: 1, text: 'vue-router', done: false },
+        { id: 2, text: 'vuex', done: false },
+        { id: 3, text: 'vue-loader', done: false },
+        { id: 4, text: 'awesome-vue', done: true },
+      ],
     };
   },
 };
