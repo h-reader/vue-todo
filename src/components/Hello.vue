@@ -1,6 +1,6 @@
 <template>
   <div>
-      {{ msg }}
+      <h3>{{ msg }}</h3>
       <form>
           <button @click="addTodo()" >ADD TASK</button>
           <button @click="removeTodo()">DELETE FINISHED TASKS</button>
