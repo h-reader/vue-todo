@@ -9,7 +9,7 @@
       </form>
       <div class="task-list">
           <label class="task-list__item" v-for="todo in todos" :key="todo.id" >
-            <input type="checkbox"><button>EDIT</button>{{ todo.text }}
+            <input type="checkbox" v-model="todo.done"><button>EDIT</button>{{ todo.text }}
           </label>
       </div>
   </div>
@@ -38,7 +38,10 @@ export default {
       }
 
       this.todos.push({
-        id: this.todos.length + 1,
+        id: Math.max(this.todos.map((todo) => {
+          const id = todo.id;
+          return id;
+        })) + 1,
         text: todoText,
         done: false,
       });
@@ -46,7 +49,7 @@ export default {
       this.newTodo = '';
     },
     removeTodo() {
-      for (let i = 0; i < this.todos.length; i += 1) {
+      for (let i = this.todos.length - 1; i >= 0; i -= 1) {
         if (this.todos[i].done) {
           this.todos.splice(i, 1);
         }
