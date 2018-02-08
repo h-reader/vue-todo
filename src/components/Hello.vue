@@ -9,7 +9,11 @@
       </form>
       <div class="task-list">
           <label class="task-list__item" v-for="todo in todos" :key="todo.id" >
-            <input type="checkbox" v-model="todo.done"><button>EDIT</button>{{ todo.text }}
+            <input type="checkbox" v-model="todo.done">
+            <input type="text" v-if="todo.editing" v-model="todo.text"
+              @keyup.enter="todo.editing = !todo.editing" >
+            <span v-else>{{ todo.text }}</span>
+            <button @click="changeEditMode(todo)">EDIT</button>
           </label>
       </div>
   </div>
@@ -22,10 +26,10 @@ export default {
     return {
       msg: 'Welcome to your Vue.js App',
       todos: [
-        { id: 1, text: 'vue-router', done: false },
-        { id: 2, text: 'vuex', done: false },
-        { id: 3, text: 'vue-loader', done: false },
-        { id: 4, text: 'awesome-vue', done: true },
+        { id: 1, text: 'vue-router', done: false, editing: false },
+        { id: 2, text: 'vuex', done: false, editing: false },
+        { id: 3, text: 'vue-loader', done: false, editing: false },
+        { id: 4, text: 'awesome-vue', done: true, editing: false },
       ],
       newTodo: '',
     };
@@ -44,6 +48,7 @@ export default {
         })) + 1,
         text: todoText,
         done: false,
+        editing: false,
       });
 
       this.newTodo = '';
@@ -54,6 +59,10 @@ export default {
           this.todos.splice(i, 1);
         }
       }
+    },
+    changeEditMode(todo) {
+      const todoModel = todo;
+      todoModel.editing = !todoModel.editing;
     },
   },
 };
@@ -74,7 +83,7 @@ export default {
     flex-direction: column;
     align-items: center;
     &__item {
-        width: 270px;
+        width: 370px;
         text-align: left;
         $element: #{&};
         &--checked {
