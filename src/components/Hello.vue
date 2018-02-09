@@ -1,12 +1,12 @@
 <template>
   <div>
       <h3>{{ msg }}</h3>
-      <form>
+      <div>
           <button @click="addTodo()" >ADD TASK</button>
           <button @click="removeTodo()">DELETE FINISHED TASKS</button>
           <p>input: <input type="text" v-model="newTodo"></p>
           <p>task: {{ newTodo }} </p>
-      </form>
+      </div>
       <div class="task-list">
           <label class="task-list__item" v-for="todo in todos" :key="todo.id"
               :class="{ 'task-list__item--checked': todo.done }">
