@@ -31,11 +31,7 @@ describe('Hello.vue', () => {
 
   it('Todoの0件削除', () => {
     const beforeTodoCount = vm.todos.length;
-    vm.todos.map((todo) => {
-      const myTodo = todo;
-      myTodo.done = false;
-      return myTodo;
-    });
+    vm.todos.map(todo => todo.done = false);
     expect(vm.todos.filter(todo => todo.done).length).to.equal(0);
     vm.removeTodo();
     expect(vm.todos.length).to.equal(beforeTodoCount);
