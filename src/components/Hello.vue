@@ -43,7 +43,7 @@ export default {
       }
 
       this.todos.push({
-        id: Math.max(this.todos.map(todo => todo.id)) + 1,
+        id: Math.max.apply(null, this.todos.map(todo => todo.id)) + 1,
         text: todoText,
         done: false,
         editing: false,
