@@ -21,21 +21,25 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'hello',
   data() {
     return {
       msg: 'Welcome to your Vue.js App',
-      todos: [
-        { id: 1, text: 'vue-router', done: false, editing: false },
-        { id: 2, text: 'vuex', done: false, editing: false },
-        { id: 3, text: 'vue-loader', done: false, editing: false },
-        { id: 4, text: 'awesome-vue', done: true, editing: false },
-      ],
+      todos: [],
       newTodo: '',
     };
   },
+  created() {
+    this.fetchTodos();
+  },
   methods: {
+    async fetchTodos() {
+      const res = await axios.get('http://localhost:4321/api/todos');
+      this.todos = res.data;
+    },
     addTodo() {
       const todoText = this.newTodo && this.newTodo.trim();
       if (!todoText) {
