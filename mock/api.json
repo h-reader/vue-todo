@@ -1,0 +1,28 @@
+{
+  "todos": [
+    {
+      "text": "vue-router",
+      "done": false,
+      "editing": false,
+      "id": 1
+    },
+    {
+      "text": "vue-vuex",
+      "done": false,
+      "editing": false,
+      "id": 2
+    },
+    {
+      "text": "vue-loader",
+      "done": false,
+      "editing": false,
+      "id": 3
+    },
+    {
+      "text": "awesome-vue",
+      "done": false,
+      "editing": false,
+      "id": 4
+    }
+  ]
+}
