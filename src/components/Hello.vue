@@ -10,9 +10,9 @@
       <div class="task-list">
           <label class="task-list__item" v-for="todo in todos" :key="todo.id"
               :class="{ 'task-list__item--checked': todo.done }">
-              <input type="checkbox" v-model="todo.done">
+              <input type="checkbox" v-model="todo.done" @change="updateTodo(todo)">
               <input type="text" v-if="todo.editing" v-model="todo.text"
-                @keyup.enter="todo.editing = !todo.editing" >
+                @keyup.enter="updateTodo(todo)" >
               <span v-else>{{ todo.text }}</span>
               <button @click="changeEditMode(todo)">EDIT</button>
           </label>
@@ -22,6 +22,8 @@
 
 <script>
 import axios from 'axios';
+
+const todoApiUrl = 'http://localhost:3000/todos/';
 
 export default {
   name: 'hello',
@@ -37,30 +39,41 @@ export default {
   },
   methods: {
     async fetchTodos() {
-      const res = await axios.get('http://localhost:4321/api/todos');
+      const res = await axios.get(todoApiUrl);
       this.todos = res.data;
     },
-    addTodo() {
+    async addTodo() {
       const todoText = this.newTodo && this.newTodo.trim();
       if (!todoText) {
         return;
       }
 
-      this.todos.push({
-        id: Math.max.apply(null, this.todos.map(todo => todo.id)) + 1,
+      await axios.post(todoApiUrl, {
         text: todoText,
         done: false,
         editing: false,
       });
 
+      await this.fetchTodos();
+
       this.newTodo = '';
     },
-    removeTodo() {
-      for (let i = this.todos.length - 1; i >= 0; i -= 1) {
-        if (this.todos[i].done) {
-          this.todos.splice(i, 1);
-        }
-      }
+    async removeTodo() {
+      await this.todos.filter(todo => todo.done)
+        .forEach(todo => axios.delete(todoApiUrl + todo.id));
+
+      await this.fetchTodos();
+    },
+    async updateTodo(todo) {
+      todo.editing = false;
+
+      await axios.put(todoApiUrl + todo.id, {
+        text: todo.text,
+        done: todo.done,
+        editing: todo.editing,
+      });
+
+      await this.fetchTodos();
     },
     changeEditMode(todo) {
       const todoModel = todo;
