@@ -11,7 +11,9 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "mock": "node node_modules/json-server/bin/index.js --watch ./mock/api_tmp.json",
+    "mock-init": "cp mock/api.json mock/api_tmp.json"
   },
   "dependencies": {
     "axios": "^0.17.1",
